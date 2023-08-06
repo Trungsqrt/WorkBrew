@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Listing;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('listings', [
+        "heading" => "Lastest List",
+        "listings" => Listing::all()
+    ]);
+});
+
+Route::get("/listings/{id}", function (string $id) {
+    return view("listing", [
+        "listing" => Listing::find($id)
+    ]);
 });
