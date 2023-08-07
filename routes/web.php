@@ -22,8 +22,9 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get("/listings/{id}", function (string $id) {
+Route::get("/listings/{listing}", function (Listing $listing) {
+    error_log("abc: " . $listing);
     return view("listing", [
-        "listing" => Listing::find($id)
+        "listing" => $listing
     ]);
 });
