@@ -17,6 +17,7 @@ return new class extends Migration
             $table->uuid("id")->primary();
             $table->string("title");
             $table->string("tags");
+            $table->string('logo')->nullable();
             $table->string("company");
             $table->string("location");
             $table->string("email");

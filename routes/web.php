@@ -1,8 +1,8 @@
 <?php
 
-use App\Models\Listing;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ListingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,16 +15,38 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('listings', [
-        "heading" => "Lastest List",
-        "listings" => Listing::all()
-    ]);
-});
+// Show all listings
+Route::get('/', [ListingController::class, "index"]);
 
-Route::get("/listings/{listing}", function (Listing $listing) {
-    error_log("abc: " . $listing);
-    return view("listing", [
-        "listing" => $listing
-    ]);
-});
+// Show create form
+Route::get("/listings/create", [ListingController::class, "create"]);
+
+// Store listing data
+Route::post("/listings", [ListingController::class, "store"]);
+
+// Show edit form
+Route::get("/listings/{listing}/edit", [ListingController::class, "edit"]);
+
+// Update
+Route::patch("/listings/{listing}", [ListingController::class, "update"]);
+
+// Delete
+Route::delete("/listings/{listing}", [ListingController::class, "destroy"]);
+
+// Show single listing
+Route::get("/listings/{listing}", [ListingController::class, "show"]);
+
+// Register form
+Route::get("/register", [UserController::class, 'create']);
+
+// Create New User
+Route::post('/users', [UserController::class, 'store']);
+
+// Log User Out
+Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
+
+// Log In User
+Route::post('/users/authenticate', [UserController::class, 'authenticate']);
+
+// Login form
+Route::get("/login", [UserController::class, 'login']);
